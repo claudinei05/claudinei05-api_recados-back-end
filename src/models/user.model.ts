@@ -1,8 +1,8 @@
 import { v4 as createUuid } from "uuid";
-import { RecadosModel } from "./recado.model";
+import { ErrandsModel } from "./errands.model";
 export class UserModel {
   private _id: string;
-  private _recados: RecadosModel[];
+  private _errands: ErrandsModel[];
   constructor(
     private _name: string,
     private _user: string,
@@ -10,7 +10,7 @@ export class UserModel {
     private _confirmPassword: string
   ) {
     this._id = createUuid();
-    this._recados = [];
+    this._errands = [];
   }
   public get id() {
     return this._id;
@@ -39,11 +39,11 @@ export class UserModel {
   public set confirmPassword(confPassword: string) {
     this._confirmPassword = confPassword;
   }
-  public get recados() {
-    return this._recados;
+  public get errands() {
+    return this._errands;
   }
-  public set recados(recados: RecadosModel[]) {
-    this._recados = recados;
+  public set errands(errands: ErrandsModel[]) {
+    this._errands = errands;
   }
 
   public toJson() {
@@ -53,7 +53,7 @@ export class UserModel {
       user: this._user,
       password: this._password,
       confirmPassword: this._confirmPassword,
-      recados: this.recados,
+      errands: this._errands,
     };
   }
 }

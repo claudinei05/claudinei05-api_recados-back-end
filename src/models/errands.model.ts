@@ -1,6 +1,5 @@
 import { v4 as createUuid } from "uuid";
-
-export class RecadosModel {
+export class ErrandsModel {
   private _id: string;
   constructor(private _description: string, private _detailing: string) {
     this._id = createUuid();
@@ -15,7 +14,7 @@ export class RecadosModel {
     this._description = description;
   }
 
-  public get detaling() {
+  public get detailing() {
     return this._detailing;
   }
   public set detailing(detailing: string) {
