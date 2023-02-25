@@ -12,6 +12,7 @@ export class ErrandsController {
       let { id, description, detailing } = req.body;
       const database = new UserDataBase();
       id = userId;
+
       if (description === "" && detailing === "") {
         return RequestError.fieldNotProvaider(res, "Description ou Detailing ");
       }
@@ -19,16 +20,16 @@ export class ErrandsController {
         return res.status(400).send({
           ok: false,
           massage:
-            " Minimum number of characters was not provided (Minimum 03 characters)",
+            " Minimum number of characters was not provided (Minimum 03 caracters)",
         });
       }
 
       const users = database.getId(userId);
-      if (!users) {
-        return RequestError.notFound(res, "User ");
-      }
+      // if (!users) {
+      //   return RequestError.notFound(res, "User ");
+      // }
       const note = new ErrandsModel(description, detailing);
-      users.errands.push(note);
+      users?.errands.push(note);
       return res.status(201).send({
         ok: true,
         message: "Errands success created",

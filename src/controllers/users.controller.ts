@@ -22,6 +22,13 @@ export class userController {
           message: "Fill in the fields (preencha os campos)",
         });
       }
+      if (password.length < 5 || confirmPassword.length < 5) {
+        return res.status(404).send({
+          ok: false,
+          message:
+            " Password needs at least 5 characters (A senha precisa de pelo menos 5 caracteres)",
+        });
+      }
 
       if (password !== confirmPassword) {
         return res.status(404).send({
@@ -30,11 +37,16 @@ export class userController {
         });
       }
       database.create(newUser);
-      return SuccessResponse.createSuccess(
-        res,
-        "User was successfully create(O usuário foi criado com sucesso)",
-        newUser
-      );
+      return res.status(200).send({
+        ok: true,
+        message: "O usuário foi criado com sucesso",
+        data: newUser.toJson(),
+      });
+      // return SuccessResponse.createSuccess(
+      //   res,
+      //   "User was successfully create(O usuário foi criado com sucesso)",
+      //   newUser
+      // );
     } catch (error: any) {
       return ErrorServer.errorServerProcessing(res, error);
     }

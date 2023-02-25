@@ -19,16 +19,16 @@ export class UserDataBase {
   // public getCpf(cpf: string) {
   //   return users.find((user) => user.cpf === cpf);
   // }
-  // public indexUser(id: string) {
-  //   return users.findIndex((user) => user.id === id);
-  // }
-  public indexTransactions(id: string) {
-    // return users.findIndex((transactions) => transactions.transactions === id);
+  public indexUser(id: string) {
+    return users.findIndex((user) => user.id === id);
   }
+  // public indexTransactions(id: string) {
+  //   // return users.findIndex((transactions) => transactions.transactions === id);
+  // }
   public deleteErrands(index: number) {
     return users.splice(index, 1);
   }
-  public delTransactions(index: number) {
-    return users.splice(index, 1);
-  }
+  // public delTransactions(index: number) {
+  //   return users.splice(index, 1);
+  // }
 }

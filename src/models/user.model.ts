@@ -1,5 +1,6 @@
 import { v4 as createUuid } from "uuid";
 import { ErrandsModel } from "./errands.model";
+
 export class UserModel {
   private _id: string;
   private _errands: ErrandsModel[];
