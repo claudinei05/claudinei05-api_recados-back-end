@@ -25,9 +25,9 @@ export class ErrandsController {
       }
 
       const users = database.getId(userId);
-      // if (!users) {
-      //   return RequestError.notFound(res, "User ");
-      // }
+      if (!users) {
+        return RequestError.notFound(res, "User ");
+      }
       const note = new ErrandsModel(description, detailing);
       users?.errands.push(note);
       return res.status(201).send({
