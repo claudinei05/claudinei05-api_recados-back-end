@@ -29,6 +29,13 @@ export class userController {
             " Password needs at least 5 characters (A senha precisa de pelo menos 5 caracteres)",
         });
       }
+      if (user.length < 5) {
+        return res.status(404).send({
+          ok: false,
+          message:
+            " The user needs at least 5 characters (O usuário precisa de pelo menos 5 caracteres)",
+        });
+      }
 
       if (password !== confirmPassword) {
         return res.status(404).send({

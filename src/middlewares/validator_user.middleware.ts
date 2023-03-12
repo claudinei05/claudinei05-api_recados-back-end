@@ -3,21 +3,21 @@ import { UserDataBase } from "../database/user.database";
 import { RequestError } from "../erros/request.error";
 import { ErrorServer } from "../erros/server.error";
 
-export class ValidatorMiddlewareCpf {
-  public static cpfValidMiddleware(
+export class ValidatorMiddlewarUser {
+  public static userValidMiddleware(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const { cpf } = req.body;
+      const { user } = req.body;
 
       const database = new UserDataBase();
-      const cpfUser = database.getCpf(cpf);
-      if (cpfUser) {
+      const validUser = database.getUser(user);
+      if (validUser) {
         return res.status(400).send({
           ok: false,
-          message: "CPF already exists (CPF já existe)",
+          message: "User already exists (User já existe)",
         });
       }
       next();
