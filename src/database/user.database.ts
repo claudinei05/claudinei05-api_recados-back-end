@@ -27,6 +27,6 @@ export class UserDataBase {
     return users.splice(index, 1);
   }
   public deleteErrand(index: number) {
-    return users.splice(index, 1);
+    return users.splice(index, 2);
   }
 }
