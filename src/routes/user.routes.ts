@@ -11,11 +11,13 @@ export const userRoutes = () => {
     ValidatorMiddlewarUser.userValidMiddleware,
     new userController().createUser
   );
-  app.post(
-    "/login",
-    LoginValidatorMiddleware.loginValidator,
-    new userController().loginUser
-  );
+
+  //app.get("/:userId", new userController().listUser);
+  // app.post(
+  //   "/login",
+  //   LoginValidatorMiddleware.loginValidator,
+  //   new userController().loginUser
+  // );
   app.post("/:userId/errand", new ErrandsController().createErrands);
   app.put("/errands/:userId/note/:id", new ErrandsController().edit);
   app.delete("/errands/:userId/note/:id", new ErrandsController().delete);

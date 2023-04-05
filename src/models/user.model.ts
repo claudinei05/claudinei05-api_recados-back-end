@@ -1,5 +1,6 @@
 import { v4 as createUuid } from "uuid";
 import { ErrandsModel } from "./errands.model";
+import { UserEntity } from "../database/entities/user.entity";
 
 export class UserModel {
   private _id: string;
@@ -56,5 +57,18 @@ export class UserModel {
       confirmPassword: this._confirmPassword,
       errands: this._errands,
     };
+  }
+
+  public static create(
+    id: string,
+    name: string,
+    user: string,
+    password: string,
+    confirmPassword: string,
+    errands?: ErrandsModel[]
+  ) {
+    const users = new UserModel(name, user, password, confirmPassword);
+    users._id = id;
+    return users;
   }
 }

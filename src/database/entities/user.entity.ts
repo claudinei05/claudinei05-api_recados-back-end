@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { ErrandsEntity } from "./errands.entity";
 
 @Entity({
-  name: "user",
+  name: "users",
 })
-export class UserEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryColumn()
   id: string;
 
@@ -19,6 +20,9 @@ export class UserEntity {
     length: 10,
   })
   senha: string;
+
+  @OneToMany(() => ErrandsEntity, (errands) => errands.user)
+  errands: ErrandsEntity[];
 
   @Column({
     type: "timestamp",

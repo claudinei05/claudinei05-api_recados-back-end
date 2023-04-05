@@ -1,16 +1,24 @@
 import { Request, Response } from "express";
-import { UserDataBase } from "../database/user.database";
+import { UserDataBase } from "../database/repositories/user.database";
 import { RequestError } from "../erros/request.error";
 import { ErrorServer } from "../erros/server.error";
 import { UserModel } from "../models/user.model";
 import { SuccessResponse } from "../success/success";
+import { Any } from "typeorm";
 
 export class userController {
-  public createUser(req: Request, res: Response) {
+  public async createUser(req: Request, res: Response) {
     try {
       const { name, user, password, confirmPassword } = req.body;
       const newUser = new UserModel(name, user, password, confirmPassword);
       const database = new UserDataBase();
+
+      if (user === user) {
+        return res.status(400).send({
+          ok: false,
+          message: "User already exists (Usuario já existe)",
+        });
+      }
       if (
         name === "" ||
         user === "" ||
@@ -43,11 +51,11 @@ export class userController {
           message: " Password does not match(Senha não confere)",
         });
       }
-      database.create(newUser);
+      const result = await database.create(newUser);
       return res.status(200).send({
         ok: true,
         message: "O usuário foi criado com sucesso",
-        data: newUser.toJson(),
+        data: result,
       });
       // return SuccessResponse.createSuccess(
       //   res,
@@ -58,30 +66,74 @@ export class userController {
       return ErrorServer.errorServerProcessing(res, error);
     }
   }
-  public loginUser(req: Request, res: Response) {
-    try {
-      const { user, password } = req.body;
-      const database = new UserDataBase();
-      if (!user || !password) {
-        return RequestError.fieldNotProvaider(res, "User and Password fields");
-      }
-      const users = database.list();
-      const returnUser = users.find(
-        (valUser) => valUser.user === user && valUser.password === password
-      );
-      if (!returnUser) {
-        return res.status(401).send({
-          ok: false,
-          message: "Invalid credentials",
-        });
-      }
-      return res.status(200).send({
-        ok: true,
-        message: "Login successfully done",
-        data: returnUser.toJson(),
-      });
-    } catch (error: any) {
-      return ErrorServer.errorServerProcessing;
-    }
-  }
+  // public async listUser(req: Request, res: Response) {
+  //   try {
+  //     const { userId } = req.params;
+  //     const database = new UserDataBase();
+  //     const user = await database.getID(userId);
+  //     if (!user) {
+  //       return RequestError.fieldNotProvaider(res, "User ");
+  //     }
+  //     // let note = user.errands.map((item) => {
+  //     //   return {
+  //     //     description: item.description,
+  //     //     detailing: item.detailing,
+  //     //   };
+  //     // });
+  //     return res.status(200).send({
+  //       ok: true,
+  //       message: "Success",
+  //       date: user.toJson(),
+  //     });
+  //   } catch (error: any) {
+  //     return ErrorServer.errorServerProcessing;
+  //   }
+  // }
+  //   public async list(req: Request, res: Response) {
+  //     try {
+  //         const { user } = req.query;
+
+  //         const database = new UserDataBase();
+  //         let listUser = await database.list(
+  //             user ? String(user)
+  //         );
+
+  //         const result = listUser.map((user) => user.toJson());
+
+  //         res.status(200).send({
+  //             ok: true,
+  //             message: "Growdevers successfully listed",
+  //             data: result,
+  //         });
+  //     } catch (error: any) {
+  //         return ErrorServer.errorServerProcessing(res, error);
+  //     }
+  // }
+
+  // public loginUser(req: Request, res: Response) {
+  //   try {
+  //     const { user, password } = req.body;
+  //     const database = new UserDataBase();
+  //     if (!user || !password) {
+  //       return RequestError.fieldNotProvaider(res, "User and Password fields");
+  //     }
+  //     const users = database.list();
+  //     const returnUser = users.find(
+  //       (valUser) => valUser.user === user && valUser.password === password
+  //     );
+  //     if (!returnUser) {
+  //       return res.status(401).send({
+  //         ok: false,
+  //         message: "Invalid credentials",
+  //       });
+  //     }
+  //     return res.status(200).send({
+  //       ok: true,
+  //       message: "Login successfully done",
+  //       data: returnUser.toJson(),
+  //     });
+  //   } catch (error: any) {
+  //     return ErrorServer.errorServerProcessing;
+  //   }
+  // }
 }

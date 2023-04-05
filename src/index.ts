@@ -3,6 +3,8 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import { userRoutes } from "./routes/user.routes";
 import { DatabaseConnection } from "./database/config/database.connection";
+import "reflect-metadata";
+
 //import { DatabaseConnection } from "./database/config/database.connection";
 
 dotenv.config();
@@ -11,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-app.use("/user", userRoutes());
+app.use("/users", userRoutes());
 
 DatabaseConnection.connect().then(() => {
   app.listen(process.env.PORT, () => {
