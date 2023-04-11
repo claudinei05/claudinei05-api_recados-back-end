@@ -5,6 +5,7 @@ import { RequestError } from "../erros/request.error";
 import { ErrorServer } from "../erros/server.error";
 import { ErrandsModel } from "../models/errands.model";
 import { ErrandsDatabase } from "../database/repositories/errands.database";
+import { log } from "console";
 
 export class ErrandsController {
   public async createErrands(req: Request, res: Response) {
@@ -51,28 +52,72 @@ export class ErrandsController {
       // return RequestError.fieldNotProvaider(res, "Errands ");
     }
   }
-  public edit(req: Request, res: Response) {
+
+  // public async update(req: Request, res: Response) {
+  //   try {
+  //     const { userId, idErrands } = req.params;
+  //     const { description, detailing } = req.body;
+
+  //     const database = new ErrandsDatabase();
+  //     const result = await database.updateWithSave(description, detailing);
+
+  //     if (result === 0) {
+  //       return res.status(404).send({
+  //         ok: false,
+  //         message: "User not found",
+  //       });
+  //     }
+
+  //     return res.status(200).send({
+  //       ok: true,
+  //       message: "Growdever successfully updated",
+  //       data: userId,
+  //     });
+  //   } catch (error: any) {
+  //     return ErrorServer.errorServerProcessing(res, error);
+  //   }
+  // }
+
+  public async edit(req: Request, res: Response) {
     try {
-      const { userId, id } = req.params;
+      const { userId, idErrands } = req.params;
       const { description, detailing } = req.body;
-      const database = new UserDataBase();
-      const user = database.getId(userId);
+      // const database = new UserDataBase();
+      // const user = database.getID(userId);
+      const user = new UserDataBase().getID(userId);
       if (!user) {
         return RequestError.fieldNotProvaider(res, "User ");
       }
-      const note = user.errands.find((item) => item.id === id);
-      if (!note) {
-        return RequestError.notFound(res, "Errands ");
+      const database = new ErrandsDatabase();
+
+      const result = await database.editErrands(
+        idErrands,
+        description,
+        detailing
+      );
+      // const noteDatabase = user.errands.find((item) => item.id === id);
+      // if (!noteDatabase) {
+      //   return RequestError.notFound(res, "Errands ");
+      // }
+      // if (description) {
+      //   noteDatabase.description = description;
+      // }
+      //  if (detailing) {
+      //    noteDatabase.detailing = detailing;
+      // }
+
+      if (result === 0) {
+        return res.status(404).send({
+          ok: false,
+          message: "Errands not updated",
+          date: console.log(result),
+        });
       }
-      if (description) {
-        note.description = description;
-      }
-      if (detailing) {
-        note.detailing = detailing;
-      }
+      const message = await database.getID(idErrands);
       return res.status(202).send({
         ok: true,
         message: "Successfully updated",
+        data: message,
       });
     } catch (error: any) {
       return res.status(500).send({

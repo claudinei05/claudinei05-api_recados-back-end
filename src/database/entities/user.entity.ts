@@ -4,7 +4,7 @@ import { ErrandsEntity } from "./errands.entity";
 @Entity({
   name: "users",
 })
-export class UserEntity extends BaseEntity {
+export class UserEntity {
   @PrimaryColumn()
   id: string;
 
@@ -20,6 +20,11 @@ export class UserEntity extends BaseEntity {
     length: 10,
   })
   senha: string;
+
+  // @Column({
+  //   length: 10,
+  // })
+  // confsenha: string;
 
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];

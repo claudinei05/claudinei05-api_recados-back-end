@@ -40,7 +40,43 @@ export class ErrandsDatabase {
     });
   }
 
-  public async editErrands(id: string) {}
+  public async editErrands(
+    id: string,
+    description: string,
+    detailing: string
+  ): Promise<any> {
+    const result = await this.repository.update(
+      { id },
+      { description: description, detailing: detailing }
+    );
+    return result;
+  }
+  public async getID(id: string) {
+    const result = await this.repository.findOneBy({ id });
+
+    if (!result) {
+      return 0;
+    }
+
+    return result;
+  }
+  // public async updateWithSave(
+  //   id: string,
+  //   description: string
+  // ): Promise<number> {
+  //   const errandsEntity = await this.repository.findOneBy({
+  //     id,
+  //   });
+
+  //   if (!errandsEntity) {
+  //     return 0;
+  //   }
+
+  //   errandsEntity.description = description;
+  //   await this.repository.save(errandsEntity);
+
+  //   return 1;
+  // }
 
   static mapEntityToModel(entity: ErrandsEntity): ErrandsModel {
     return ErrandsModel.create(entity.id, entity.description, entity.detailing);

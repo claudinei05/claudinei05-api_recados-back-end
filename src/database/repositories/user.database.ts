@@ -31,7 +31,7 @@ export class UserDataBase {
       entity.nome,
       entity.usuario,
       entity.senha,
-      "indefinido",
+      "indefinida",
       errands
     );
   }
@@ -57,6 +57,17 @@ export class UserDataBase {
       return null;
     }
     return this.mapEntityToModel(result);
+  }
+
+  public async login(user: string, password: string): Promise<any> {
+    const result = await this.repository.findOne({
+      where: {
+        usuario: user,
+        senha: password,
+      },
+    });
+
+    return result;
   }
 
   public getId(id: string) {

@@ -4,7 +4,6 @@ import { RequestError } from "../erros/request.error";
 import { ErrorServer } from "../erros/server.error";
 import { UserModel } from "../models/user.model";
 import { SuccessResponse } from "../success/success";
-import { Any } from "typeorm";
 
 export class userController {
   public async createUser(req: Request, res: Response) {
@@ -13,12 +12,12 @@ export class userController {
       const newUser = new UserModel(name, user, password, confirmPassword);
       const database = new UserDataBase();
 
-      // if (user) {
+      // if (user === user) {
       //   return res.status(400).send({
       //     ok: false,
       //     message: "User already exists (Usuario já existe)",
       //   });
-      //}
+      // }
       if (
         name === "" ||
         user === "" ||
@@ -52,17 +51,17 @@ export class userController {
         });
       }
       const result = await database.create(newUser);
-      return res.status(200).send({
-        ok: true,
-        message:
-          "User was successfully create(O usuário foi criado com sucesso)",
-        data: result,
-      });
-      // return SuccessResponse.createSuccess(
-      //   res,
-      //   "User was successfully create(O usuário foi criado com sucesso)",
-      //   newUser
-      // );
+      // return res.status(200).send({
+      //   ok: true,
+      //   message:
+      //     "User was successfully create(O usuário foi criado com sucesso)",
+      //   data: result,
+      // });
+      return SuccessResponse.createSuccess(
+        res,
+        "User was successfully create(O usuário foi criado com sucesso)",
+        result
+      );
     } catch (error: any) {
       return ErrorServer.errorServerProcessing(res, error);
     }
@@ -88,8 +87,8 @@ export class userController {
   //     });
   //   } catch (error: any) {
   //     return ErrorServer.errorServerProcessing;
-  //   }
   // }
+  //}
   //   public async list(req: Request, res: Response) {
   //     try {
   //         const { user } = req.query;
@@ -111,30 +110,36 @@ export class userController {
   //     }
   // }
 
-  // public loginUser(req: Request, res: Response) {
-  //   try {
-  //     const { user, password } = req.body;
-  //     const database = new UserDataBase();
-  //     if (!user || !password) {
-  //       return RequestError.fieldNotProvaider(res, "User and Password fields");
-  //     }
-  //     const users = database.list();
-  //     const returnUser = users.find(
-  //       (valUser) => valUser.user === user && valUser.password === password
-  //     );
-  //     if (!returnUser) {
-  //       return res.status(401).send({
-  //         ok: false,
-  //         message: "Invalid credentials",
-  //       });
-  //     }
-  //     return res.status(200).send({
-  //       ok: true,
-  //       message: "Login successfully done",
-  //       data: returnUser.toJson(),
-  //     });
-  //   } catch (error: any) {
-  //     return ErrorServer.errorServerProcessing;
-  //   }
-  // }
+  public async loginUser(req: Request, res: Response) {
+    try {
+      const { user, password } = req.body;
+      const database = new UserDataBase();
+      if (!user || !password) {
+        return RequestError.fieldNotProvaider(res, "User and Password fields");
+      }
+
+      const result = await database.login(user, password);
+      if (!result) {
+        return res.status(401).send({
+          ok: false,
+          message: "Invalid credentials",
+        });
+      }
+
+      // const userId = {
+      //   id: result.id,
+      //   nome: result.nome,
+      //   senha: result.senha,
+      // };
+
+      return res.status(200).send({
+        ok: true,
+        message: "Login successfully done",
+        //data: userId,
+        data: result,
+      });
+    } catch (error: any) {
+      return ErrorServer.errorServerProcessing;
+    }
+  }
 }
