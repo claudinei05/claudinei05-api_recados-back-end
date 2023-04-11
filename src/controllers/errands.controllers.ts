@@ -81,28 +81,30 @@ export class ErrandsController {
       });
     }
   }
-  public delete(req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     try {
       const { userId, id } = req.params;
       const database = new UserDataBase();
-      let user = database.getId(userId);
+      let user = database.getID(userId);
       if (!id) {
         return RequestError.notFound(res, "Id ");
       }
       if (!user) {
         return RequestError.notFound(res, "User ");
       }
-      let note = user.errands.findIndex((item) => {
-        return item.id === id;
-      });
-      if (note < 0) {
-        return RequestError.notFound(res, "Errands ");
-      }
-      user.errands.splice(note, 1);
+      const databaseErrands = new ErrandsDatabase();
+      const result = await databaseErrands.deleteErrands(id);
+
+      // if (result ) {
+      //   return res.status(404).send({
+      //     ok: false,
+      //     message: "Transaction not found",
+      //   });
+      // }
       return res.status(200).send({
         ok: true,
         message: "Errands successfully deleted",
-        data: user,
+        data: result,
       });
     } catch (error: any) {
       return ErrorServer.errorServerProcessing;

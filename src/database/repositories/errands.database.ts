@@ -16,7 +16,7 @@ export class ErrandsDatabase {
       },
       //relations: ["user"],
     });
-    console.log(result);
+    // console.log(result);
     return result.map((item) =>
       ErrandsDatabase.mapEntityToModel(item).toJson()
     );
@@ -34,6 +34,14 @@ export class ErrandsDatabase {
 
     return ErrandsDatabase.mapEntityToModel(result);
   }
+  public async deleteErrands(id: string) {
+    const result = await this.repository.delete({
+      id,
+    });
+  }
+
+  public async editErrands(id: string) {}
+
   static mapEntityToModel(entity: ErrandsEntity): ErrandsModel {
     return ErrandsModel.create(entity.id, entity.description, entity.detailing);
   }
