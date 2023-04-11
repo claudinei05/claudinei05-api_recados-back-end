@@ -7,12 +7,19 @@ import { UserModel } from "../../models/user.model";
 export class ErrandsDatabase {
   private repository =
     DatabaseConnection.connection.getRepository(ErrandsEntity);
-  public async list() {
+  public async list(id: string) {
     const result = await this.repository.find({
-      relations: ["users"],
+      where: {
+        user: {
+          id: id,
+        },
+      },
+      //relations: ["user"],
     });
     console.log(result);
-    return result.map((item) => ErrandsDatabase.mapEntityToModel(item));
+    return result.map((item) =>
+      ErrandsDatabase.mapEntityToModel(item).toJson()
+    );
   }
   public async create(id: string, errand: ErrandsModel) {
     const errandsEntity = this.repository.create({
@@ -28,6 +35,6 @@ export class ErrandsDatabase {
     return ErrandsDatabase.mapEntityToModel(result);
   }
   static mapEntityToModel(entity: ErrandsEntity): ErrandsModel {
-    throw new Error("Method not implemented.");
+    return ErrandsModel.create(entity.id, entity.description, entity.detailing);
   }
 }

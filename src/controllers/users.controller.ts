@@ -13,12 +13,12 @@ export class userController {
       const newUser = new UserModel(name, user, password, confirmPassword);
       const database = new UserDataBase();
 
-      if (user === user) {
-        return res.status(400).send({
-          ok: false,
-          message: "User already exists (Usuario já existe)",
-        });
-      }
+      // if (user) {
+      //   return res.status(400).send({
+      //     ok: false,
+      //     message: "User already exists (Usuario já existe)",
+      //   });
+      //}
       if (
         name === "" ||
         user === "" ||
@@ -54,7 +54,8 @@ export class userController {
       const result = await database.create(newUser);
       return res.status(200).send({
         ok: true,
-        message: "O usuário foi criado com sucesso",
+        message:
+          "User was successfully create(O usuário foi criado com sucesso)",
         data: result,
       });
       // return SuccessResponse.createSuccess(

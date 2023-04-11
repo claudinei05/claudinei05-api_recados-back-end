@@ -1,4 +1,5 @@
 import { v4 as createUuid } from "uuid";
+
 export class ErrandsModel {
   private _id: string;
   constructor(private _description: string, private _detailing: string) {
@@ -7,8 +8,13 @@ export class ErrandsModel {
   public get id() {
     return this._id;
   }
+
   public get description() {
     return this._description;
+  }
+
+  public set id(id: string) {
+    this._id = id;
   }
   public set description(description: string) {
     this._description = description;
@@ -19,6 +25,12 @@ export class ErrandsModel {
   }
   public set detailing(detailing: string) {
     this._detailing = detailing;
+  }
+  public static create(id: string, description: string, detailing: string) {
+    const errands = new ErrandsModel(description, detailing);
+    errands.id = id;
+
+    return errands;
   }
   public toJson() {
     return {

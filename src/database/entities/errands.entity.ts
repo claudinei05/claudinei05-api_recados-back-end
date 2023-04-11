@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   BeforeUpdate,
   Column,
   Entity,
@@ -9,11 +10,11 @@ import {
 } from "typeorm";
 import { UserEntity } from "./user.entity";
 
-@Entity({
-  name: "errands",
-})
+@Entity({ name: "message" })
 export class ErrandsEntity {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    name: "id_message",
+  })
   id: string;
 
   @Column({

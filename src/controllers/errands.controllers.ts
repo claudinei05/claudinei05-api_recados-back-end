@@ -4,14 +4,14 @@ import { UserDataBase } from "../database/repositories/user.database";
 import { RequestError } from "../erros/request.error";
 import { ErrorServer } from "../erros/server.error";
 import { ErrandsModel } from "../models/errands.model";
+import { ErrandsDatabase } from "../database/repositories/errands.database";
 
 export class ErrandsController {
-  public createErrands(req: Request, res: Response) {
+  public async createErrands(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      let { id, description, detailing } = req.body;
-      const database = new UserDataBase();
-      id = userId;
+      // let { id, description, detailing } = req.body;
+      let { description, detailing } = req.body;
 
       if (description === "" && detailing === "") {
         return RequestError.fieldNotProvaider(res, "Description ou Detailing ");
@@ -24,19 +24,31 @@ export class ErrandsController {
         });
       }
 
-      const users = database.getId(userId);
+      const userDatabase = new UserDataBase();
+      const users = await userDatabase.getID(userId);
+
       if (!users) {
         return RequestError.notFound(res, "User ");
       }
-      const note = new ErrandsModel(description, detailing);
-      users?.errands.push(note);
+
+      const dataBase = new ErrandsDatabase();
+      const result = await dataBase.create(
+        userId,
+        new ErrandsModel(description, detailing)
+      );
+      // const note = new ErrandsModel(description, detailing);
+      // users?.errands.push(note);
       return res.status(201).send({
         ok: true,
         message: "Errands success created",
-        date: users,
+        date: result,
       });
     } catch (error: any) {
-      return RequestError.fieldNotProvaider(res, "Errands ");
+      return res.status(500).send({
+        ok: false,
+        message: error.toString(),
+      });
+      // return RequestError.fieldNotProvaider(res, "Errands ");
     }
   }
   public edit(req: Request, res: Response) {
@@ -96,27 +108,22 @@ export class ErrandsController {
       return ErrorServer.errorServerProcessing;
     }
   }
-  public listErrands(req: Request, res: Response) {
+  public async listErrands(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      const database = new UserDataBase();
-      const user = database.getId(userId);
-      if (!user) {
-        return RequestError.fieldNotProvaider(res, "User ");
-      }
-      let note = user.errands.map((item) => {
-        return {
-          description: item.description,
-          detailing: item.detailing,
-        };
-      });
+      const database = new ErrandsDatabase();
+      const result = await database.list(userId);
+
       return res.status(200).send({
         ok: true,
         message: "Success",
-        date: note,
+        date: result,
       });
     } catch (error: any) {
-      return ErrorServer.errorServerProcessing;
+      return res.status(500).send({
+        ok: false,
+        message: error.toString(),
+      });
     }
   }
 }

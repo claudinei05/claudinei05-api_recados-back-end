@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-app.use("/users", userRoutes());
+app.use("/user", userRoutes());
 
 DatabaseConnection.connect().then(() => {
   app.listen(process.env.PORT, () => {
