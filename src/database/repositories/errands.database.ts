@@ -1,8 +1,6 @@
-import { log } from "console";
 import { ErrandsModel } from "../../models/errands.model";
 import { DatabaseConnection } from "../config/database.connection";
 import { ErrandsEntity } from "../entities/errands.entity";
-import { UserModel } from "../../models/user.model";
 
 export class ErrandsDatabase {
   private repository =
@@ -34,49 +32,34 @@ export class ErrandsDatabase {
 
     return ErrandsDatabase.mapEntityToModel(result);
   }
-  public async deleteErrands(id: string) {
+
+  public async delete(id: string): Promise<number> {
     const result = await this.repository.delete({
       id,
     });
+
+    return result.affected ?? 0;
   }
 
-  public async editErrands(
+  public async updateWithSave(
     id: string,
     description: string,
     detailing: string
-  ): Promise<any> {
-    const result = await this.repository.update(
-      { id },
-      { description: description, detailing: detailing }
-    );
-    return result;
-  }
-  public async getID(id: string) {
-    const result = await this.repository.findOneBy({ id });
+  ): Promise<number> {
+    const errandsEntity = await this.repository.findOneBy({
+      id,
+    });
 
-    if (!result) {
+    if (!errandsEntity) {
       return 0;
     }
 
-    return result;
+    errandsEntity.description = description;
+    errandsEntity.detailing = detailing;
+    await this.repository.save(errandsEntity);
+
+    return 1;
   }
-  // public async updateWithSave(
-  //   id: string,
-  //   description: string
-  // ): Promise<number> {
-  //   const errandsEntity = await this.repository.findOneBy({
-  //     id,
-  //   });
-
-  //   if (!errandsEntity) {
-  //     return 0;
-  //   }
-
-  //   errandsEntity.description = description;
-  //   await this.repository.save(errandsEntity);
-
-  //   return 1;
-  // }
 
   static mapEntityToModel(entity: ErrandsEntity): ErrandsModel {
     return ErrandsModel.create(entity.id, entity.description, entity.detailing);
