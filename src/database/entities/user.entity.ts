@@ -24,7 +24,7 @@ export class UserEntity {
   // @Column({
   //   length: 10,
   // })
-  // confsenha: string;
+  // confirmPassword: string;
 
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];

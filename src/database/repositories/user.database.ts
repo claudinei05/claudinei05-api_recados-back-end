@@ -1,7 +1,6 @@
 import { UserModel } from "../../models/user.model";
 import { DatabaseConnection } from "../config/database.connection";
 import { UserEntity } from "../entities/user.entity";
-
 import { ErrandsDatabase } from "./errands.database";
 
 export class UserDataBase {
@@ -20,6 +19,7 @@ export class UserDataBase {
       entity.usuario,
       entity.senha,
       "indefinida",
+      //  entity.confirmPassword,
       errands
     );
   }
@@ -30,6 +30,7 @@ export class UserDataBase {
       nome: user.name,
       usuario: user.user,
       senha: user.password,
+      //  confirmPassword: user.confirmPassword,
     });
 
     const result = await this.repository.save(userEntity);
@@ -47,7 +48,12 @@ export class UserDataBase {
     }
     return this.mapEntityToModel(result);
   }
-
+  public async getUser(usuario: string) {
+    const result = await this.repository.findOne({
+      where: { usuario },
+    });
+    return result;
+  }
   public async login(user: string, password: string): Promise<any> {
     const result = await this.repository.findOne({
       where: {

@@ -14,7 +14,7 @@ export class ErrandsDatabase {
       },
       //relations: ["user"],
     });
-    // console.log(result);
+
     return result.map((item) =>
       ErrandsDatabase.mapEntityToModel(item).toJson()
     );
@@ -28,7 +28,6 @@ export class ErrandsDatabase {
     });
 
     const result = await this.repository.save(errandsEntity);
-    console.log(result);
 
     return ErrandsDatabase.mapEntityToModel(result);
   }

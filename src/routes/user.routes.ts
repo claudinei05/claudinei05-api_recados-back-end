@@ -1,23 +1,24 @@
 import { Router } from "express";
 import { ErrandsController } from "../controllers/errands.controllers";
 import { userController } from "../controllers/users.controller";
+
 //import { LoginValidatorMiddleware } from "../middlewares/login-validator-middleware";
-//import { ValidatorMiddlewarUser } from "../middlewares/validator_user.middleware";
+import { ValidatorMiddlewarUser } from "../middlewares/validator_user.middleware";
 
 export const userRoutes = () => {
   const app = Router();
-  // app.post(
-  //   "/createaccount",
-  //   ValidatorMiddlewarUser.userValidMiddleware,
-  //   new userController().createUser
-  // );
+
   // app.post(
   //   "/login",
   //   LoginValidatorMiddleware.loginValidator,
   //   new userController().loginUser
   // );
   // app.delete("/userId/:id/errands/:id", new ErrandsController().delete);
-  app.post("/createaccount", new userController().createUser);
+  app.post(
+    "/createaccount",
+    ValidatorMiddlewarUser.userValidMiddleware,
+    new userController().createUser
+  );
 
   app.post("/login", new userController().loginUser);
 

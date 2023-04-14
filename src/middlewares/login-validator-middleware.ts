@@ -1,19 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorServer } from "../erros/server.error";
 import { RequestError } from "../erros/request.error";
+import { UserDataBase } from "../database/repositories/user.database";
 
 // export class LoginValidatorMiddleware {
-//   public static loginValidator(
+//   public static async loginValidator(
 //     req: Request,
 //     res: Response,
 //     next: NextFunction
 //   ) {
 //     try {
 //       const { user, password } = req.body;
-//       if (!user) {
-//         return RequestError.fieldNotProvaider(res, "User");
-//       }
-//       if (!password) {
+//       const database = new UserDataBase();
+//       const validUser = await database.login(user, password);
+//       if (!validUser) {
+//         return RequestError.notFound(res, "User123");
+//       } else if (!password) {
 //         return RequestError.fieldNotProvaider(res, "Password");
 //       }
 
