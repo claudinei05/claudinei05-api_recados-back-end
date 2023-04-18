@@ -29,9 +29,15 @@ export class UserEntity {
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];
 
-  @Column({
-    type: "timestamp",
-    name: "dthr_atualizacao",
-  })
-  dthrAtualizacao: Date;
+  // @Column({
+  //   type: "timestamp",
+  //   name: "dthr_criacao",
+  // })
+  // dthrCriacao: Date;
+
+  // @Column({
+  //   type: "timestamp",
+  //   name: "dthr_atualizacao",
+  // })
+  // dthrAtualizacao: Date;
 }

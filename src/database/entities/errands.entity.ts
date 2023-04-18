@@ -1,10 +1,8 @@
 import {
-  BaseEntity,
   BeforeUpdate,
   Column,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   PrimaryColumn,
 } from "typeorm";
@@ -32,11 +30,11 @@ export class ErrandsEntity {
   })
   idUser: string;
 
-  @Column({
-    type: "timestamp",
-    name: "dthr_atualizacao",
-  })
-  dthrAtualizacao: Date;
+  // @Column({
+  //   type: "timestamp",
+  //   name: "dthr_atualizacao",
+  // })
+  // dthrAtualizacao: Date;
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({
@@ -44,8 +42,8 @@ export class ErrandsEntity {
   })
   user: UserEntity;
 
-  @BeforeUpdate()
-  beforeUpdate() {
-    this.dthrAtualizacao = new Date();
-  }
+  // @BeforeUpdate()
+  // beforeUpdate() {
+  //   this.dthrAtualizacao = new Date();
+  // }
 }
