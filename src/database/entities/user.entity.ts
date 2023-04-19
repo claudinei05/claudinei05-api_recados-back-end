@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import {
+  BaseEntity,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+} from "typeorm";
 import { ErrandsEntity } from "./errands.entity";
 
 @Entity({
@@ -28,16 +35,4 @@ export class UserEntity {
 
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];
-
-  // @Column({
-  //   type: "timestamp",
-  //   name: "dthr_criacao",
-  // })
-  // dthrCriacao: Date;
-
-  // @Column({
-  //   type: "timestamp",
-  //   name: "dthr_atualizacao",
-  // })
-  // dthrAtualizacao: Date;
 }

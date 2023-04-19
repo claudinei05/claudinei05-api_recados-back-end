@@ -59,7 +59,7 @@ export class UserModel {
     };
   }
 
-  public static create(
+  public static createModels(
     id: string,
     name: string,
     user: string,

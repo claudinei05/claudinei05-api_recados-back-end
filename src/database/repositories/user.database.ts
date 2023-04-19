@@ -13,7 +13,7 @@ export class UserDataBase {
       ErrandsDatabase.mapEntityToModel(item)
     );
 
-    return UserModel.create(
+    return UserModel.createModels(
       entity.id.trim(),
       entity.nome,
       entity.usuario,
@@ -23,7 +23,7 @@ export class UserDataBase {
     );
   }
 
-  public async create(user: UserModel) {
+  public async createDatabase(user: UserModel) {
     const userEntity = this.repository.create({
       id: user.id,
       nome: user.name,

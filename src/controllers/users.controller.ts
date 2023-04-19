@@ -53,7 +53,7 @@ export class userController {
         });
       }
 
-      const result = await database.create(newUser);
+      const result = await database.createDatabase(newUser);
       return SuccessResponse.createSuccess(
         res,
         "User was successfully create(O usuário foi criado com sucesso)",
