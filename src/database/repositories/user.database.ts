@@ -18,8 +18,7 @@ export class UserDataBase {
       entity.nome,
       entity.usuario,
       entity.senha,
-      "indefinida",
-      //  entity.confirmPassword,
+      entity.confirmPassword,
       errands
     );
   }
@@ -30,7 +29,7 @@ export class UserDataBase {
       nome: user.name,
       usuario: user.user,
       senha: user.password,
-      //  confirmPassword: user.confirmPassword,
+      confirmPassword: user.confirmPassword,
     });
 
     const result = await this.repository.save(userEntity);

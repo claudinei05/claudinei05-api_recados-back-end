@@ -21,10 +21,10 @@ export class UserEntity {
   })
   senha: string;
 
-  // @Column({
-  //   length: 10,
-  // })
-  // confirmPassword: string;
+  @Column({
+    length: 10,
+  })
+  confirmPassword: string;
 
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];
