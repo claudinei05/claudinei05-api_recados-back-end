@@ -30,6 +30,7 @@ export class UserDataBase {
       usuario: user.user,
       senha: user.password,
       confirmPassword: user.confirmPassword,
+      dthrCcriacao: new Date(),
     });
 
     const result = await this.repository.save(userEntity);

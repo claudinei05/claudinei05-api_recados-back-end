@@ -33,6 +33,12 @@ export class UserEntity {
   })
   confirmPassword: string;
 
+  @Column({
+    type: "timestamp",
+    name: "dthr_criacao",
+  })
+  dthrCcriacao: Date;
+
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];
 }

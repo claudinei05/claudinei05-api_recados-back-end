@@ -30,6 +30,12 @@ export class ErrandsEntity {
   })
   idUser: string;
 
+  @Column({
+    type: "timestamp",
+    name: "dthr_Criacao",
+  })
+  dthrCriacao: Date;
+
   // @Column({
   //   type: "timestamp",
   //   name: "dthr_atualizacao",

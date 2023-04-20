@@ -25,6 +25,7 @@ export class ErrandsDatabase {
       description: errand.description,
       detailing: errand.detailing,
       idUser: id,
+      dthrCriacao: new Date(),
     });
 
     const result = await this.repository.save(errandsEntity);
