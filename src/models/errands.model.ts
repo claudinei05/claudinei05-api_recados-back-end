@@ -34,9 +34,9 @@ export class ErrandsModel {
   }
   public toJson() {
     return {
+      id: this._id,
       description: this._description,
       detailing: this._detailing,
-      id: this._id,
     };
   }
 }
