@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { UserEntity } from "./user.entity";
 
@@ -36,11 +37,10 @@ export class ErrandsEntity {
   })
   dthrCriacao: Date;
 
-  // @Column({
-  //   type: "timestamp",
-  //   name: "dthr_atualizacao",
-  // })
-  // dthrAtualizacao: Date;
+  @UpdateDateColumn({
+    name: "dthr_Atualizacao",
+  })
+  dthrAtualizacao: Date;
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({
@@ -48,8 +48,8 @@ export class ErrandsEntity {
   })
   user: UserEntity;
 
-  // @BeforeUpdate()
-  // beforeUpdate() {
-  //   this.dthrAtualizacao = new Date();
-  // }
+  @BeforeUpdate()
+  beforeUpdate() {
+    this.dthrAtualizacao = new Date();
+  }
 }

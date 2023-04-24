@@ -2,6 +2,7 @@ import {
   BaseEntity,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryColumn,
@@ -33,8 +34,7 @@ export class UserEntity {
   })
   confirmPassword: string;
 
-  @Column({
-    type: "timestamp",
+  @CreateDateColumn({
     name: "dthr_criacao",
   })
   dthrCcriacao: Date;

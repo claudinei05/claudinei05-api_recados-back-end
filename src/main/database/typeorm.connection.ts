@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import config from "./database.config";
+import config from "../config/typeorm.config";
 
 export class DatabaseConnection {
   private static _connection: DataSource;

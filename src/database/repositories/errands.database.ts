@@ -1,5 +1,5 @@
 import { ErrandsModel } from "../../models/errands.model";
-import { DatabaseConnection } from "../config/database.connection";
+import { DatabaseConnection } from "../../main/database/typeorm.connection";
 import { ErrandsEntity } from "../entities/errands.entity";
 
 export class ErrandsDatabase {

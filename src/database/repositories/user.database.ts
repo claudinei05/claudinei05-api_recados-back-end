@@ -1,5 +1,5 @@
 import { UserModel } from "../../models/user.model";
-import { DatabaseConnection } from "../config/database.connection";
+import { DatabaseConnection } from "../../main/database/typeorm.connection";
 import { UserEntity } from "../entities/user.entity";
 import { ErrandsDatabase } from "./errands.database";
 
