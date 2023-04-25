@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorServer } from "../erros/server.error";
 import { RequestError } from "../erros/request.error";
-import { UserDataBase } from "../../../database/repositories/user.database";
+//import { UserDataBase } from "../../features/user/repositores/user.repository";
 
 // export class LoginValidatorMiddleware {
 //   public static async loginValidator(

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UserDataBase } from "../../../database/repositories/user.database";
+import { UserRepository } from "../../features/user/repositores/user.repository";
 import { ErrorServer } from "../erros/server.error";
 
 export class ValidatorMiddlewarUser {
@@ -11,7 +11,7 @@ export class ValidatorMiddlewarUser {
     try {
       const { user } = req.body;
 
-      const database = new UserDataBase();
+      const database = new UserRepository();
       const validUser = await database.getUser(user);
       if (validUser) {
         return res.status(400).send({

@@ -1,5 +1,5 @@
 import express from "express";
-import { userRoutes } from "../../routes/user.routes";
+import { userRoutes } from "../../app/features/user/routes/user.routes";
 import cors from "cors";
 
 export const createServerApp = () => {

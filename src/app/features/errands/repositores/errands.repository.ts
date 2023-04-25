@@ -1,8 +1,8 @@
-import { ErrandsModel } from "../../app/models/errands.model";
-import { DatabaseConnection } from "../../main/database/typeorm.connection";
-import { ErrandsEntity } from "../../app/shared/database/entities/errands.entity";
+import { ErrandsModel } from "../../../models/errands.model";
+import { DatabaseConnection } from "../../../../main/database/typeorm.connection";
+import { ErrandsEntity } from "../../../shared/database/entities/errands.entity";
 
-export class ErrandsDatabase {
+export class ErrandsRepository {
   private repository =
     DatabaseConnection.connection.getRepository(ErrandsEntity);
   public async list(id: string) {
@@ -16,7 +16,7 @@ export class ErrandsDatabase {
     });
 
     return result.map((item) =>
-      ErrandsDatabase.mapEntityToModel(item).toJson()
+      ErrandsRepository.mapEntityToModel(item).toJson()
     );
   }
   public async create(id: string, errand: ErrandsModel) {
@@ -30,7 +30,7 @@ export class ErrandsDatabase {
 
     const result = await this.repository.save(errandsEntity);
 
-    return ErrandsDatabase.mapEntityToModel(result);
+    return ErrandsRepository.mapEntityToModel(result);
   }
 
   public async delete(id: string): Promise<number> {

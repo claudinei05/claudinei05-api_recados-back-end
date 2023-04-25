@@ -1,16 +1,16 @@
-import { UserModel } from "../../app/models/user.model";
-import { DatabaseConnection } from "../../main/database/typeorm.connection";
-import { UserEntity } from "../../app/shared/database/entities/user.entity";
-import { ErrandsDatabase } from "./errands.database";
+import { UserModel } from "../../../models/user.model";
+import { DatabaseConnection } from "../../../../main/database/typeorm.connection";
+import { UserEntity } from "../../../shared/database/entities/user.entity";
+import { ErrandsRepository } from "../../errands/repositores/errands.repository";
 
-export class UserDataBase {
+export class UserRepository {
   private repository = DatabaseConnection.connection.getRepository(UserEntity);
 
   private mapEntityToModel(entity: UserEntity): UserModel {
     const errandsEntity = entity.errands ?? [];
 
     const errands = errandsEntity.map((item) =>
-      ErrandsDatabase.mapEntityToModel(item)
+      ErrandsRepository.mapEntityToModel(item)
     );
 
     return UserModel.createModels(
@@ -30,7 +30,7 @@ export class UserDataBase {
       usuario: user.user,
       senha: user.password,
       confirmPassword: user.confirmPassword,
-      dthrCriacao: new Date(),
+      // dthrCriacao: new Date(),
     });
 
     const result = await this.repository.save(userEntity);

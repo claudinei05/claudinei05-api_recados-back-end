@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { UserDataBase } from "../database/repositories/user.database";
-import { ErrorServer } from "../app/shared/erros/server.error";
-import { UserModel } from "../app/models/user.model";
-import { SuccessResponse } from "../app/shared/success/success";
+// import {  UserRepository } from "../repositores/user.repository";
+import { ErrorServer } from "../../../shared/erros/server.error";
+import { UserModel } from "../../../models/user.model";
+import { SuccessResponse } from "../../../shared/success/success";
+import { UserRepository } from "../repositores/user.repository";
 
 export class userController {
   public async createUser(req: Request, res: Response) {
@@ -10,7 +11,7 @@ export class userController {
       const { name, user, password, confirmPassword } = req.body;
 
       const newUser = new UserModel(name, user, password, confirmPassword);
-      const database = new UserDataBase();
+      const database = new UserRepository();
 
       // const databaseGetUser = await database.getUser(user);
       // if (databaseGetUser) {
@@ -67,19 +68,19 @@ export class userController {
   public async loginUser(req: Request, res: Response) {
     try {
       const { user, password } = req.body;
-      const database = new UserDataBase();
+      const database = new UserRepository();
 
       const result = await database.login(user, password);
       if (!result) {
         return res.status(401).send({
           ok: false,
-          message: "Invalid credentials",
+          message: "Invalid credentials (Credenciais inválidas)",
         });
       }
 
       return res.status(200).send({
         ok: true,
-        message: "Login successfully done",
+        message: "Login successfully done (Login feito com sucesso)",
         data: result,
       });
     } catch (error: any) {

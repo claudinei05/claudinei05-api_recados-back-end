@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { DatabaseConnection } from "../database/typeorm.connection";
-import { userRoutes } from "../../routes/user.routes";
+import { userRoutes } from "../../app/features/user/routes/user.routes";
 import { createServerApp } from "../config/express.config";
 import { serverEnv } from "../../app/envs/server.env";
 
