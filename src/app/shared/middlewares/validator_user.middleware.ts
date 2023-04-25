@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UserDataBase } from "../database/repositories/user.database";
+import { UserDataBase } from "../../../database/repositories/user.database";
 import { ErrorServer } from "../erros/server.error";
 
 export class ValidatorMiddlewarUser {

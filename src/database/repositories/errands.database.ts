@@ -1,6 +1,6 @@
-import { ErrandsModel } from "../../models/errands.model";
+import { ErrandsModel } from "../../app/models/errands.model";
 import { DatabaseConnection } from "../../main/database/typeorm.connection";
-import { ErrandsEntity } from "../entities/errands.entity";
+import { ErrandsEntity } from "../../app/shared/database/entities/errands.entity";
 
 export class ErrandsDatabase {
   private repository =

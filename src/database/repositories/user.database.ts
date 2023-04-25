@@ -1,6 +1,6 @@
-import { UserModel } from "../../models/user.model";
+import { UserModel } from "../../app/models/user.model";
 import { DatabaseConnection } from "../../main/database/typeorm.connection";
-import { UserEntity } from "../entities/user.entity";
+import { UserEntity } from "../../app/shared/database/entities/user.entity";
 import { ErrandsDatabase } from "./errands.database";
 
 export class UserDataBase {
@@ -30,7 +30,7 @@ export class UserDataBase {
       usuario: user.user,
       senha: user.password,
       confirmPassword: user.confirmPassword,
-      dthrCcriacao: new Date(),
+      dthrCriacao: new Date(),
     });
 
     const result = await this.repository.save(userEntity);

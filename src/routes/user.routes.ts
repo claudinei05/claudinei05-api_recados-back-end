@@ -3,7 +3,7 @@ import { ErrandsController } from "../controllers/errands.controllers";
 import { userController } from "../controllers/users.controller";
 
 //import { LoginValidatorMiddleware } from "../middlewares/login-validator-middleware";
-import { ValidatorMiddlewarUser } from "../middlewares/validator_user.middleware";
+import { ValidatorMiddlewarUser } from "../app/shared/middlewares/validator_user.middleware";
 
 export const userRoutes = () => {
   const app = Router();

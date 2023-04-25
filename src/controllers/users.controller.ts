@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { UserDataBase } from "../database/repositories/user.database";
-import { ErrorServer } from "../erros/server.error";
-import { UserModel } from "../models/user.model";
-import { SuccessResponse } from "../success/success";
+import { ErrorServer } from "../app/shared/erros/server.error";
+import { UserModel } from "../app/models/user.model";
+import { SuccessResponse } from "../app/shared/success/success";
 
 export class userController {
   public async createUser(req: Request, res: Response) {

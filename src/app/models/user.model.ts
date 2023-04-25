@@ -1,6 +1,6 @@
 import { v4 as createUuid } from "uuid";
 import { ErrandsModel } from "./errands.model";
-import { UserEntity } from "../database/entities/user.entity";
+import { UserEntity } from "../shared/database/entities/user.entity";
 
 export class UserModel {
   private _id: string;

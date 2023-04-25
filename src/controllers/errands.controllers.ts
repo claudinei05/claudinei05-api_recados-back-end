@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 //import { users } from "../database/user";
 import { UserDataBase } from "../database/repositories/user.database";
-import { RequestError } from "../erros/request.error";
-import { ErrorServer } from "../erros/server.error";
-import { ErrandsModel } from "../models/errands.model";
+import { RequestError } from "../app/shared/erros/request.error";
+import { ErrorServer } from "../app/shared/erros/server.error";
+import { ErrandsModel } from "../app/models/errands.model";
 import { ErrandsDatabase } from "../database/repositories/errands.database";
 
 export class ErrandsController {

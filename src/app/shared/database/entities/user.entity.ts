@@ -37,7 +37,7 @@ export class UserEntity {
   @CreateDateColumn({
     name: "dthr_criacao",
   })
-  dthrCcriacao: Date;
+  dthrCriacao: Date;
 
   @OneToMany(() => ErrandsEntity, (errands) => errands.user)
   errands: ErrandsEntity[];
