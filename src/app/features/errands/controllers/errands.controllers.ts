@@ -5,6 +5,8 @@ import { RequestError } from "../../../shared/erros/request.error";
 import { ErrorServer } from "../../../shared/erros/server.error";
 import { ErrandsModel } from "../../../models/errands.model";
 import { ErrandsRepository } from "../repositores/errands.repository";
+import { CreateErrandsUsecase } from "../usecase/create-errands.usecase";
+import { createErrandsUsecaseFactory } from "../util/create-errands-usecase.factory";
 
 export class ErrandsController {
   public async createErrands(req: Request, res: Response) {
@@ -20,28 +22,13 @@ export class ErrandsController {
         return res.status(400).send({
           ok: false,
           massage:
-            " Minimum number of characters was not provided (Minimum 03 caracters)",
+            " Minimum number of characters was not provided (Minimo 03 caracters)",
         });
       }
 
-      const userRepository = new UserRepository();
-      const users = await userRepository.getID(userId);
-
-      if (!users) {
-        return RequestError.notFound(res, "User ");
-      }
-
-      const dataBase = new ErrandsRepository();
-      const result = await dataBase.create(
-        userId,
-        new ErrandsModel(description, detailing)
-      );
-
-      return res.status(201).send({
-        ok: true,
-        message: "Errands success created (Recados criados com sucesso)",
-        date: result.toJson(),
-      });
+      const usecase = createErrandsUsecaseFactory();
+      const result = await usecase.execute({ userId, description, detailing });
+      return res.status(result.code).send(result);
     } catch (error: any) {
       return res.status(500).send({
         ok: false,

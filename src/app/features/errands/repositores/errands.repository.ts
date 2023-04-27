@@ -1,10 +1,12 @@
 import { ErrandsModel } from "../../../models/errands.model";
 import { DatabaseConnection } from "../../../../main/database/typeorm.connection";
 import { ErrandsEntity } from "../../../shared/database/entities/errands.entity";
+import { ErrandsRepositoryContract } from "../util/errands-repository.contract";
 
-export class ErrandsRepository {
+export class ErrandsRepository implements ErrandsRepositoryContract {
   private repository =
     DatabaseConnection.connection.getRepository(ErrandsEntity);
+
   public async list(id: string) {
     const result = await this.repository.find({
       where: {

@@ -2,8 +2,9 @@ import { UserModel } from "../../../models/user.model";
 import { DatabaseConnection } from "../../../../main/database/typeorm.connection";
 import { UserEntity } from "../../../shared/database/entities/user.entity";
 import { ErrandsRepository } from "../../errands/repositores/errands.repository";
+import { GetUserRepositoryContract } from "../util/user-repository.contract";
 
-export class UserRepository {
+export class UserRepository implements GetUserRepositoryContract {
   private repository = DatabaseConnection.connection.getRepository(UserEntity);
 
   private mapEntityToModel(entity: UserEntity): UserModel {
@@ -43,7 +44,7 @@ export class UserRepository {
       id,
     });
 
-    if (!result) {
+    if (result === null) {
       return null;
     }
     return this.mapEntityToModel(result);
