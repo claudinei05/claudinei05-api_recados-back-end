@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
-//import { users } from "../database/user";
-import { UserRepository } from "../../user/repositores/user.repository";
 import { RequestError } from "../../../shared/erros/request.error";
 import { ErrorServer } from "../../../shared/erros/server.error";
-import { ErrandsModel } from "../../../models/errands.model";
 import { ErrandsRepository } from "../repositores/errands.repository";
-import { CreateErrandsUsecase } from "../usecase/create-errands.usecase";
 import { createErrandsUsecaseFactory } from "../util/create-errands-usecase.factory";
 
 export class ErrandsController {
@@ -48,7 +44,9 @@ export class ErrandsController {
         description,
         detailing
       );
-
+      if (description === "" && detailing === "") {
+        return RequestError.fieldNotProvaider(res, "Description ou Detailing ");
+      }
       if (result === 0) {
         return res.status(404).send({
           ok: false,
@@ -89,7 +87,14 @@ export class ErrandsController {
       const { userId } = req.params;
       const database = new ErrandsRepository();
       const result = await database.list(userId);
-
+      // const test = userId;
+      // if (!result) {
+      //   return {
+      //     ok: false,
+      //     message: " User not found(Usuario não encontrado)",
+      //     code: 404,
+      //   };
+      // }
       return res.status(200).send({
         ok: true,
         message: "Errands listed successfully (Recados listados com sucesso)",

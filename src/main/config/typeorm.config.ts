@@ -1,6 +1,12 @@
 import { DataSource } from "typeorm";
 import { databaseEnv } from "../../app/envs/database.env";
 
+let entities = "src/app/shared/database/entities/**/*.ts";
+let migrations = "src/app/shared/database/migrations/**/*.ts";
+if (databaseEnv.nodeEnv !== "dev") {
+  entities = "build/app/shared/database/entities/**/*.ts";
+  migrations = "src/app/shared/database/migrations/**/*.ts";
+}
 export default new DataSource({
   type: "postgres",
   port: 5432,
@@ -12,7 +18,7 @@ export default new DataSource({
     rejectUnauthorized: false,
   },
   synchronize: false,
-  entities: ["src/app/shared/database/entities/**/*.ts"],
-  migrations: ["src/app/shared/database/migrations/**/*.ts"],
+  entities: [entities],
+  migrations: [migrations],
   schema: "errands",
 });
