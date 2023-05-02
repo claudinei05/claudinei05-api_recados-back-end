@@ -1,18 +1,23 @@
-import cors from "cors";
-import express from "express";
 import { DatabaseConnection } from "../database/typeorm.connection";
-import { userRoutes } from "../../app/features/user/routes/user.routes";
 import { createServerApp } from "../config/express.config";
 import { serverEnv } from "../../app/envs/server.env";
+import { RedisConnection } from "../database/redis.connection";
+import { Express } from "express";
 
 export class AppServer {
-  public static async run() {
-    const app = createServerApp();
+  private static app: Express;
 
-    DatabaseConnection.connect().then(() => {
-      app.listen(serverEnv.port, () => {
-        console.log(`API está rodando na porta ${process.env.PORT}`);
-      });
+  public static async run() {
+    AppServer.app = createServerApp();
+
+    Promise.all([DatabaseConnection.connect(), RedisConnection.connect()]).then(
+      this.listen
+    );
+  }
+
+  private static listen() {
+    AppServer.app.listen(serverEnv.port, () => {
+      console.log(`API is running (${process.env.PORT})`);
     });
   }
 }
