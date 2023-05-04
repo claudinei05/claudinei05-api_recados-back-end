@@ -3,6 +3,7 @@ import { RequestError } from "../../../shared/erros/request.error";
 import { ErrorServer } from "../../../shared/erros/server.error";
 import { ErrandsRepository } from "../repositores/errands.repository";
 import { createErrandsUsecaseFactory } from "../util/create-errands-usecase.factory";
+import { ListErrandsUsecase } from "../usecase/list-errands.usecase";
 
 export class ErrandsController {
   public async createErrands(req: Request, res: Response) {
@@ -85,21 +86,13 @@ export class ErrandsController {
   public async listErrands(req: Request, res: Response) {
     try {
       const { userId } = req.params;
-      const database = new ErrandsRepository();
-      const result = await database.list(userId);
-      // const test = userId;
-      // if (!result) {
-      //   return {
-      //     ok: false,
-      //     message: " User not found(Usuario não encontrado)",
-      //     code: 404,
-      //   };
-      // }
-      return res.status(200).send({
-        ok: true,
-        message: "Errands listed successfully (Recados listados com sucesso)",
-        date: result,
+
+      const usecase = new ListErrandsUsecase();
+      const result = await usecase.execute({
+        userId,
       });
+
+      return res.status(result.code).send(result);
     } catch (error: any) {
       return res.status(500).send({
         ok: false,
