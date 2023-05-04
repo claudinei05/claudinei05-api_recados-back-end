@@ -4,6 +4,7 @@ import { ErrorServer } from "../../../shared/erros/server.error";
 import { ErrandsRepository } from "../repositores/errands.repository";
 import { createErrandsUsecaseFactory } from "../util/create-errands-usecase.factory";
 import { ListErrandsUsecase } from "../usecase/list-errands.usecase";
+import { DeleteErrandsUsecase } from "../usecase/delete-errands.usecase";
 
 export class ErrandsController {
   public async createErrands(req: Request, res: Response) {
@@ -46,7 +47,7 @@ export class ErrandsController {
         detailing
       );
       if (description === "" && detailing === "") {
-        return RequestError.fieldNotProvaider(res, "Description ou Detailing ");
+        return RequestError.fieldNotProvaider(res, "Description or detail  ");
       }
       if (result === 0) {
         return res.status(404).send({
@@ -67,18 +68,13 @@ export class ErrandsController {
   public async delete(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const database = new ErrandsRepository();
-      let result = await database.delete(id);
 
-      if (result === 0) {
-        return RequestError.notFound(res, "Errands ");
-      }
-
-      return res.status(200).send({
-        ok: true,
-        message: "Errand successfully deleted (Recado excluído com sucesso)",
-        data: result,
+      const usecase = new DeleteErrandsUsecase();
+      const result = await usecase.execute({
+        id,
       });
+
+      return res.status(result.code).send(result);
     } catch (error: any) {
       return ErrorServer.errorServerProcessing;
     }
