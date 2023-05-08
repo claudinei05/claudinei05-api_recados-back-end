@@ -42,6 +42,12 @@ export class ErrandsRepository implements ErrandsRepositoryContract {
 
     return result.affected ?? 0;
   }
+  // public async get(description: string, detailing: string) {
+  //   const result = await this.repository.find({
+  //     where: { description, detailing },
+  //   });
+  //   return result;
+  // }
 
   public async updateWithSave(
     id: string,

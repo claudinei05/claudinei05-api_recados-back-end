@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { RequestError } from "../../../shared/erros/request.error";
 import { ErrorServer } from "../../../shared/erros/server.error";
-import { ErrandsRepository } from "../repositores/errands.repository";
 import { createErrandsUsecaseFactory } from "../util/create-errands-usecase.factory";
 import { ListErrandsUsecase } from "../usecase/list-errands.usecase";
 import { DeleteErrandsUsecase } from "../usecase/delete-errands.usecase";
+import { UpdateErrandsUsecase } from "../usecase/update-errands.usecase";
 
 export class ErrandsController {
   public async createErrands(req: Request, res: Response) {
@@ -40,26 +40,18 @@ export class ErrandsController {
       const { errandsId } = req.params;
       const { description, detailing } = req.body;
 
-      const database = new ErrandsRepository();
-      const result = await database.updateWithSave(
+      const usecase = new UpdateErrandsUsecase();
+      const result = await usecase.execute({
         errandsId,
         description,
-        detailing
-      );
-      if (description === "" && detailing === "") {
-        return RequestError.fieldNotProvaider(res, "Description or detail  ");
-      }
-      if (result === 0) {
-        return res.status(404).send({
-          ok: false,
-          message: "User not found",
-        });
-      }
-
-      return res.status(200).send({
-        ok: true,
-        message: "Errand successfully updated (Recado atualizado com sucesso)",
+        detailing,
       });
+
+      // if (description === "" && detailing === "") {
+      //   return RequestError.fieldNotProvaider(res, "Description or detail  ");
+      // }
+
+      return res.status(result.code).send(result);
     } catch (error: any) {
       return ErrorServer.errorServerProcessing(res, error);
     }

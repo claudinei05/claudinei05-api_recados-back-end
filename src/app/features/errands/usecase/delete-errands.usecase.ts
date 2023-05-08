@@ -1,12 +1,12 @@
 import { Return } from "../../../shared/util/usecase.return";
 import { ErrandsRepository } from "../repositores/errands.repository";
 
-interface ListErrandsParams {
+interface DeleteErrandsParams {
   id: string;
 }
 
 export class DeleteErrandsUsecase {
-  public async execute(data: ListErrandsParams): Promise<Return> {
+  public async execute(data: DeleteErrandsParams): Promise<Return> {
     const database = new ErrandsRepository();
 
     let result = await database.delete(data.id);
