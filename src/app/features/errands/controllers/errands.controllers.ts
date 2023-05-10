@@ -13,16 +13,16 @@ export class ErrandsController {
 
       let { description, detailing } = req.body;
 
-      if (description === "" && detailing === "") {
-        return RequestError.fieldNotProvaider(res, "Description ou Detailing ");
-      }
-      if (description < 3 && detailing < 3) {
-        return res.status(400).send({
-          ok: false,
-          massage:
-            " Minimum number of characters was not provided (Minimo 03 caracters)",
-        });
-      }
+      // if (description === "" && detailing === "") {
+      //   return RequestError.fieldNotProvaider(res, "Description ou Detailing ");
+      // }
+      // if (description < 3 && detailing < 3) {
+      //   return res.status(400).send({
+      //     ok: false,
+      //     massage:
+      //       " Minimum number of characters was not provided (Minimo 03 caracters)",
+      //   });
+      // }
 
       const usecase = createErrandsUsecaseFactory();
       const result = await usecase.execute({ userId, description, detailing });

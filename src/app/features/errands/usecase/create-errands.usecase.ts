@@ -1,4 +1,5 @@
 import { ErrandsModel } from "../../../models/errands.model";
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { Return } from "../../../shared/util/usecase.return";
 import { GetUserRepositoryContract } from "../../user/util/user-repository.contract";
 import { ErrandsRepositoryContract } from "../util/errands-repository.contract";
@@ -31,6 +32,8 @@ export class CreateErrandsUsecase {
       new ErrandsModel(data.description, data.detailing)
     );
 
+    const cacheRepository = new CacheRepository();
+    await cacheRepository.delete("errands");
     return {
       ok: true,
       data: result,

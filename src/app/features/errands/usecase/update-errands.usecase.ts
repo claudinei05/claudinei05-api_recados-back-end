@@ -21,7 +21,7 @@ export class UpdateErrandsUsecase {
     //   return teste;
     // }
 
-    if (result) {
+    if (!result) {
       return {
         ok: false,
         message: " User not found(Usuario não encontrado)",
